@@ -19,6 +19,7 @@ export default defineComponent({
 		const number_of_tabs = inject('number_of_tabs', ref(0));
 		const current_hash = inject('current_hash', ref(window.location.hash));
 		const tab_indexes_and_ids = inject('tab_indexes_and_ids', ref(new Set()));
+		const options = inject('$vue3_accessible_tabs', {});
 
 		const active_class = props.activeClass ? ref(props.activeClass) : inject('active_class', ref('is-active'));
 		const disabled_class = props.disabledClass
@@ -130,6 +131,8 @@ export default defineComponent({
 				.map(match => match.id)
 				.shift();
 
+			const tabindex = options.tab_movement ? 0 : is_active ? 0 : -1;
+
 			return h(
 				props.tag,
 				{
@@ -147,7 +150,7 @@ export default defineComponent({
 					'data-disabled': props.disabled,
 					href: href.value || `#${tab_panel_id}`,
 					id: `${instance_id}-${props.index}-tab`,
-					tabindex: is_active ? 0 : -1,
+					tabindex: tabindex,
 					onClick: handle_click,
 					onKeydown: handle_keydown,
 				},
