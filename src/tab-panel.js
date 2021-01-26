@@ -13,6 +13,9 @@ export default defineComponent({
 		const instance_id = inject('instance_id', ref(0));
 		const panel_ref = ref();
 
+		const tab_indexes_and_ids = inject('tab_indexes_and_ids', ref(new Set()));
+		tab_indexes_and_ids.value.add({ index: props.index, id: attrs.id || `${instance_id}-${props.index}` });
+
 		const set_negative_tabindex_on_focusable_children = () => {
 			const focusable_elements_in_panel = panel_ref.value.querySelectorAll(focusable_elements);
 
@@ -49,10 +52,10 @@ export default defineComponent({
 				'div',
 				{
 					...attrs,
-					'aria-labelledby': `${instance_id}-${props.index}`,
+					'aria-labelledby': `${instance_id}-${props.index}-tab`,
 					class: 'tabs__panel',
 					hidden: !is_active,
-					id: `${instance_id}-${props.index}-panel`,
+					id:  attrs.id || `${instance_id}-${props.index}`,
 					ref: panel_ref,
 					role: 'tabpanel',
 					tabindex: is_active ? 0 : -1,

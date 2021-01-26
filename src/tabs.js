@@ -18,6 +18,9 @@ export default defineComponent({
 		const number_of_tabs = ref(0);
 		provide('number_of_tabs', number_of_tabs);
 
+		const tab_indexes_and_ids = ref(new Set());
+		provide('tab_indexes_and_ids', tab_indexes_and_ids);
+
 		provide('instance_id', props.id || `tabs-${Math.floor(Math.random() * 100000)}`);
 		provide('active_class', ref(props.activeClass));
 		provide('disabled_class', ref(props.disabledClass));

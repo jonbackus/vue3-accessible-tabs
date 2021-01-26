@@ -18,6 +18,7 @@ export default defineComponent({
 		const tabs_ref = inject('tabs_ref', ref());
 		const number_of_tabs = inject('number_of_tabs', ref(0));
 		const current_hash = inject('current_hash', ref(window.location.hash));
+		const tab_indexes_and_ids = inject('tab_indexes_and_ids', ref(new Set()));
 
 		const active_class = props.activeClass ? ref(props.activeClass) : inject('active_class', ref('is-active'));
 		const disabled_class = props.disabledClass
@@ -46,7 +47,6 @@ export default defineComponent({
 			let tab = undefined;
 
 			let index_to_check = starting_index + direction;
-
 
 			if (index_to_check > number_of_tabs.value - 1) {
 				index_to_check = 0;
@@ -111,10 +111,6 @@ export default defineComponent({
 		const set_href = () => {
 			if (attrs.href && !attrs.href.startsWith('#')) {
 				href.value = attrs.href;
-			} else if (attrs.id) {
-				href.value = `#${attrs.id}`;
-			} else {
-				href.value = `#${instance_id}-${props.index}`;
 			}
 		};
 
@@ -129,11 +125,16 @@ export default defineComponent({
 		return () => {
 			const is_active = active_index.value === props.index;
 
+			const tab_panel_id = Array.from(tab_indexes_and_ids.value)
+				.filter(pair => pair.index === props.index)
+				.map(match => match.id)
+				.shift();
+
 			return h(
 				props.tag,
 				{
 					...attrs,
-					'aria-controls': `${instance_id}-${props.index}-panel`,
+					'aria-controls': tab_panel_id || `${instance_id}-${props.index}`,
 					'aria-selected': is_active,
 					class: [
 						'tabs__tab',
@@ -144,8 +145,8 @@ export default defineComponent({
 						.trim(),
 					disabled: props.disabled,
 					'data-disabled': props.disabled,
-					href: href.value,
-					id: `${instance_id}-${props.index}`,
+					href: href.value || `#${tab_panel_id}`,
+					id: `${instance_id}-${props.index}-tab`,
 					tabindex: is_active ? 0 : -1,
 					onClick: handle_click,
 					onKeydown: handle_keydown,
