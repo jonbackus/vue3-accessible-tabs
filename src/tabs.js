@@ -7,7 +7,6 @@ export default defineComponent({
 		id: { type: String, required: false, default: undefined },
 		activeClass: { type: String, required: false, default: 'is-active' },
 		disabledClass: { type: String, required: false, default: 'is-disabled' },
-		// headerTag: { type: String, required: false, default: 'h3' },
 	},
 
 	setup(props, { slots, emit, attrs }) {
