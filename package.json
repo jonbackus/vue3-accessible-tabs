@@ -3,12 +3,12 @@
 	"version": "0.1.0",
 	"description": "A Vue 3 plugin offering a WAI-ARIA compliant tabs design pattern implementation",
 	"keywords": ["vue", "vue 3", "tabs", "vue tabs", "vue 3 tabs", "tabs component", "vue accessible tabs", "accessible tabs"],
-	"main": "src/index.js",
+	"main": "dist/index.umd.js",
 	"private": true,
 	"author": "Jon Backus",
 	"scripts": {
 		"serve": "vue-cli-service serve",
-		"build": "vue-cli-service build --mode production --target lib --name vue3-accessible-tabs ./src/index.js",
+		"build": "vue-cli-service build --mode production --target lib --name index ./src/index.js",
 		"lint": "vue-cli-service lint"
 	},
 	"dependencies": {
