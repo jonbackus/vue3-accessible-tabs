@@ -6,12 +6,19 @@ export default defineComponent({
 
 	props: {
 		index: { type: Number, required: true },
+		activeClass: { type: String, required: false },
+		disabledClass: { type: String, required: false },
 	},
 
 	setup(props, { slots, attrs }) {
 		const active_index = inject('active_index', ref(0));
 		const instance_id = inject('instance_id', ref(0));
 		const panel_ref = ref();
+
+		const options = inject('$vue3_accessible_tabs', {});
+
+		const active_class = props.activeClass ? ref(props.activeClass) : options.active_class;
+		const disabled_class = props.disabledClass ? ref(props.disabledClass) : options.disabled_class;
 
 		const tab_indexes_and_ids = inject('tab_indexes_and_ids', ref(new Set()));
 		tab_indexes_and_ids.value.add({ index: props.index, id: attrs.id || `${instance_id}-${props.index}` });
@@ -53,7 +60,13 @@ export default defineComponent({
 				{
 					...attrs,
 					'aria-labelledby': `${instance_id}-${props.index}-tab`,
-					class: 'tabs__panel',
+					class: [
+						'tabs__panel',
+						is_active ? active_class : '',
+						props.disabled ? disabled_class : '',
+					]
+						.join(' ')
+						.trim(),
 					hidden: !is_active,
 					id:  attrs.id || `${instance_id}-${props.index}`,
 					ref: panel_ref,

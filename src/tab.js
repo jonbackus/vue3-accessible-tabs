@@ -21,10 +21,8 @@ export default defineComponent({
 		const tab_indexes_and_ids = inject('tab_indexes_and_ids', ref(new Set()));
 		const options = inject('$vue3_accessible_tabs', {});
 
-		const active_class = props.activeClass ? ref(props.activeClass) : inject('active_class', ref('is-active'));
-		const disabled_class = props.disabledClass
-			? ref(props.disabledClass)
-			: inject('disabled_class', ref('is-disabled'));
+		const active_class = props.activeClass ? ref(props.activeClass) : options.active_class;
+		const disabled_class = props.disabledClass ? ref(props.disabledClass) : options.disabled_class;
 
 		const href = ref();
 
@@ -141,8 +139,8 @@ export default defineComponent({
 					'aria-selected': is_active,
 					class: [
 						'tabs__tab',
-						is_active ? active_class.value : '',
-						props.disabled ? disabled_class.value : '',
+						is_active ? active_class : '',
+						props.disabled ? disabled_class : '',
 					]
 						.join(' ')
 						.trim(),
