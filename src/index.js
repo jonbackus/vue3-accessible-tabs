@@ -18,3 +18,5 @@ export default {
 		app.component('tab-panel', TabPanel);
 	},
 };
+
+export { Tabs, TabList, Tab, TabPanel };
