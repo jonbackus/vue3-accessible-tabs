@@ -21,7 +21,7 @@ export default defineComponent({
 		const tab_indexes_and_ids = ref(new Set());
 		provide('tab_indexes_and_ids', tab_indexes_and_ids);
 
-		provide('instance_id', props.id || `tabs-${Math.floor(Math.random() * 100000)}`);
+		provide('instance_id', props.id || `tabs-${Math.random().toString(36).substr(2,9)}`);
 		provide('active_class', ref(props.activeClass));
 		provide('disabled_class', ref(props.disabledClass));
 
