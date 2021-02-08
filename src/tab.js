@@ -1,4 +1,4 @@
-import { defineComponent, h, inject, onMounted, ref } from 'vue';
+import { defineComponent, h, inject, nextTick, onMounted, ref } from 'vue';
 
 export default defineComponent({
 	name: 'tab',
@@ -27,7 +27,7 @@ export default defineComponent({
 		const href = ref();
 
 		const handle_click = () => {
-			if (!href.value.startsWith('#')) {
+			if (!href.value || (!href.value.startsWith('#') && href.value !== 'javascript:void(0)')) {
 				return;
 			}
 
@@ -107,18 +107,18 @@ export default defineComponent({
 			}
 		};
 
-		const set_href = () => {
-			if (attrs.href && !attrs.href.startsWith('#')) {
-				href.value = attrs.href;
+		const handle_focus = () => {
+			if (options.tab_movement) {
+				set_active_index(props.index);
 			}
 		};
 
 		onMounted(() => {
-			set_href();
-
-			if (current_hash.value === href.value) {
-				handle_click();
-			}
+			nextTick(() => {
+				if (current_hash.value === href.value) {
+					handle_click();
+				}
+			});
 		});
 
 		return () => {
@@ -128,6 +128,12 @@ export default defineComponent({
 				.filter(pair => pair.index === props.index)
 				.map(match => match.id)
 				.shift();
+
+			if (options.hash_change) {
+				href.value = tab_panel_id ? `#${tab_panel_id}` : `${instance_id}-${props.index}`;
+			} else {
+				href.value = 'javascript:void(0)';
+			}
 
 			const tabindex = options.tab_movement ? 0 : is_active ? 0 : -1;
 
@@ -146,11 +152,12 @@ export default defineComponent({
 						.trim(),
 					disabled: props.disabled,
 					'data-disabled': props.disabled,
-					href: href.value || `#${tab_panel_id}`,
+					href: href.value,
 					id: `${instance_id}-${props.index}-tab`,
 					tabindex: tabindex,
 					onClick: handle_click,
 					onKeydown: handle_keydown,
+					onFocus: handle_focus,
 				},
 				slots.default ? slots.default({ is_active: is_active }) : [],
 			);
