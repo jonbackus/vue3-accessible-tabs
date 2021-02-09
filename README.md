@@ -16,7 +16,7 @@ yarn add vue3-acccessible-tabs
 
 ## Register as a Global Component
 
-```
+```js
 import { createApp } from 'vue';
 import App from './App.vue'
 import vue3_accessible_accordion from 'vue3-accessible-tabs';
@@ -28,7 +28,7 @@ const app = createApp(App)
 
 ## Register Components Individually
 
-```
+```js
 import Tabs, TabList, Tab, TabPanel from 'vue3-accessible-tabs';
 
 export default {
@@ -43,7 +43,7 @@ export default {
 
 ## Example Usage
 
-```
+```html
 <tabs>
 	<tab-list>
     	<tab>Description</tab>
@@ -61,7 +61,7 @@ export default {
 
 **Plugin Options**
 
-```
+```js
 import { createApp } from 'vue';
 import App from './App.vue'
 import vue3_accessible_accordion from 'vue3-accessible-tabs';
