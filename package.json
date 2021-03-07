@@ -1,6 +1,6 @@
 {
 	"name": "vue3-accessible-tabs",
-	"version": "0.5.0",
+	"version": "0.6.0",
 	"description": "A Vue 3 plugin offering a WAI-ARIA compliant tabs design pattern implementation",
 	"keywords": ["vue", "vue 3", "tabs", "vue tabs", "vue 3 tabs", "tabs component", "vue accessible tabs", "accessible tabs"],
 	"main": "dist/index.umd.js",
@@ -62,5 +62,10 @@
 		"> 1%",
 		"last 2 versions",
 		"not dead"
-	]
+	],
+	"homepage": "https://github.com/jonbackus/vue3-accessible-tabs",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/jonbackus/vue3-accessible-tabs.git"
+	}
 }
